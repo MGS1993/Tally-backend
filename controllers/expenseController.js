@@ -4,10 +4,13 @@ const userModel = require("../models/userModel");
 const calculateExpense = require("../util/calExpenses");
 
 exports.addExpense = async (req, res) => {
-  const { cost, title, date, description, userId } = req.body;
+  let { cost, title, date, description, userId } = req.body;
   const currentUser = await userModel.findById(userId);
+  const autoDate = new Date().toISOString().split("T")[0];
 
-  if (!currentUser) return res.status(404).json({ msg: "User not found" });
+  if (!currentUser) return res.status(404).json({ msg: "User not logged in" });
+
+  if (date === "") date = autoDate;
 
   let expense = new expenseModel({
     cost,
