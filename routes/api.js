@@ -6,5 +6,6 @@ const userController = require("../controllers/userController");
 
 router.post("/login", userController.login);
 router.post("/addExpense", expenseController.addExpense);
+router.get("/getExpenses/:userId", expenseController.getExpenses);
 
 module.exports = router;
