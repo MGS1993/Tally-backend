@@ -8,4 +8,9 @@ router.post("/login", userController.login);
 router.post("/addExpense", expenseController.addExpense);
 router.get("/getExpenses/:userId", expenseController.getExpenses);
 
+router.delete(
+  "/deleteExpense/:userId/:itemId",
+  expenseController.deleteExpense
+);
+
 module.exports = router;

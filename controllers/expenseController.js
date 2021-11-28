@@ -56,3 +56,26 @@ exports.getExpenses = async (req, res) => {
     console.log("error in expense controller:", error);
   }
 };
+
+exports.deleteExpense = async (req, res) => {
+  try {
+    const { userId, itemId } = req.params;
+
+    const target = await expenseModel.findById(itemId);
+    if (target === undefined) {
+      return res.status(404).json({
+        msg: "Error: Expense id not found",
+      });
+    }
+    await expenseModel.findByIdAndRemove(target._id);
+
+    const updatedList = await expenseModel.find({});
+
+    return res.status(200).json({
+      data: updatedList,
+      msg: "Expense deleted",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
