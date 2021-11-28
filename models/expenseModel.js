@@ -7,6 +7,7 @@ const ExpenseSchema = new Schema({
   date: { type: String, required: false },
   description: { type: String, required: false },
   owner: { type: Schema.Types.ObjectId, ref: "Users" },
+  ownerName: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Expenses", ExpenseSchema);

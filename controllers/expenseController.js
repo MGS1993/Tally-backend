@@ -7,7 +7,6 @@ exports.addExpense = async (req, res) => {
   let { cost, title, date, description, userId } = req.body;
   const currentUser = await userModel.findById(userId);
   const autoDate = new Date().toISOString().split("T")[0];
-
   if (!currentUser) return res.status(404).json({ msg: "User not logged in" });
 
   if (date === "") date = autoDate;
@@ -18,6 +17,7 @@ exports.addExpense = async (req, res) => {
     date,
     description,
     owner: currentUser._id,
+    ownerName: currentUser.userName,
   });
 
   expense.save((err) =>
