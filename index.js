@@ -14,10 +14,12 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.use(express.static(path.join(__dirname, "../build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../build"));
-});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../build")));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build"));
+  });
+}
 
 const port = process.env.PORT || 9000;
 
