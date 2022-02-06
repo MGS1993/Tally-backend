@@ -14,3 +14,12 @@ exports.login = async (req, res) => {
     return res.status(200).json({ userName, _id });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  let users = await userModel.find({}).select("_id userName");
+
+  if (users === undefined)
+    return res.status(404).json({ msg: "No users found" });
+
+  return res.status(200).json(users);
+};
