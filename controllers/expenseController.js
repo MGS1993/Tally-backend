@@ -4,7 +4,6 @@ const userModel = require("../models/userModel");
 const calculateExpense = require("../util/calExpenses");
 
 exports.addExpense = async (req, res) => {
-  console.log(req);
   let { cost, title, date, description, userId, splitValue, initialCost } =
     req.body;
   const currentUser = await userModel.findById(userId);
