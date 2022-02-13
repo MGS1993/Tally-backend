@@ -95,6 +95,20 @@ exports.getExpenses = async (req, res) => {
   }
 };
 
+exports.getHistoricalExpenses = async (req, res) => {
+  const allHistoricalExpenses = await historicalExpenseModel.find({});
+  console.log(allHistoricalExpenses);
+  try {
+    allHistoricalExpenses !== undefined
+      ? res.status(200).json({
+          allHistoricalExpenses,
+        })
+      : res.status(404).json({ msg: "No historical expenses found" });
+  } catch (error) {
+    console.log("error in expense controller:", error);
+  }
+};
+
 exports.deleteExpense = async (req, res) => {
   try {
     const { userId, itemId } = req.params;

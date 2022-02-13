@@ -8,6 +8,7 @@ router.post("/login", userController.login);
 router.get("/getAllUsers", userController.getAllUsers);
 router.post("/addExpense", expenseController.addExpense);
 router.get("/getExpenses/:userId", expenseController.getExpenses);
+router.get("/getHistoricalExpenses", expenseController.getHistoricalExpenses);
 
 router.delete(
   "/deleteExpense/:userId/:itemId",
