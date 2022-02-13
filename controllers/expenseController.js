@@ -1,9 +1,11 @@
 const expenseModel = require("../models/expenseModel");
+const historicalExpenseModel = require("../models/historicalExpenseModel");
 const userModel = require("../models/userModel");
 
 const calculateExpense = require("../util/calExpenses");
 
 exports.addExpense = async (req, res) => {
+  let data = req.body;
   let {
     cost,
     title,
@@ -14,6 +16,7 @@ exports.addExpense = async (req, res) => {
     initialCost,
     exLabelColor,
   } = req.body;
+
   const currentUser = await userModel.findById(userId);
   const autoDate = new Date().toISOString().split("T")[0];
   if (!currentUser) return res.status(404).json({ msg: "User not logged in" });
@@ -32,6 +35,8 @@ exports.addExpense = async (req, res) => {
     exLabelColor,
   });
 
+  addHistoricalExpense(data);
+
   expense.save((err) =>
     err
       ? res
@@ -42,6 +47,27 @@ exports.addExpense = async (req, res) => {
           .json({ msg: "Expense added to database", expense })
           .status(200)
   );
+};
+
+addHistoricalExpense = async (data) => {
+  let { cost, title, date, description, userId, splitValue, initialCost } =
+    data;
+  const currentUser = await userModel.findById(userId);
+  const autoDate = new Date().toISOString().split("T")[0];
+
+  if (date === "") date = autoDate;
+
+  let expense = new historicalExpenseModel({
+    cost,
+    title,
+    date,
+    description,
+    owner: currentUser._id,
+    ownerName: currentUser.userName,
+    splitValue,
+    initialCost,
+  });
+  expense.save();
 };
 
 exports.getExpenses = async (req, res) => {
