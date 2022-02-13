@@ -10,6 +10,7 @@ const ExpenseSchema = new Schema({
   ownerName: { type: String, required: true },
   splitValue: { type: Number, required: true },
   initialCost: { type: String, required: true },
+  exLabelColor: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Expenses", ExpenseSchema);
