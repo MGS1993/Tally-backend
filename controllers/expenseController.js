@@ -52,6 +52,8 @@ exports.addExpense = async (req, res) => {
 addHistoricalExpense = async (data) => {
   let { cost, title, date, description, userId, splitValue, initialCost } =
     data;
+  //for testing purposes
+  if (title === "test") return;
   const currentUser = await userModel.findById(userId);
   const autoDate = new Date().toISOString().split("T")[0];
 
@@ -97,7 +99,6 @@ exports.getExpenses = async (req, res) => {
 
 exports.getHistoricalExpenses = async (req, res) => {
   const allHistoricalExpenses = await historicalExpenseModel.find({});
-  console.log(allHistoricalExpenses);
   try {
     allHistoricalExpenses !== undefined
       ? res.status(200).json({
