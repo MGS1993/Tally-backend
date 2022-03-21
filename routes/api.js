@@ -5,7 +5,7 @@ const expenseController = require("../controllers/expenseController");
 const userController = require("../controllers/userController");
 
 router.post("/login", userController.login);
-router.get("/getAllUsers", userController.getAllUsers);
+router.get("/getLinkedUsers/:userId", userController.getLinkedUsers);
 router.post("/addExpense", expenseController.addExpense);
 router.get("/getExpenses/:userId", expenseController.getExpenses);
 router.get("/getHistoricalExpenses", expenseController.getHistoricalExpenses);

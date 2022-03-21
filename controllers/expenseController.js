@@ -74,10 +74,10 @@ addHistoricalExpense = async (data) => {
 
 exports.getExpenses = async (req, res) => {
   const { userId } = req.params;
-  const { _id } = await userModel.findById(userId);
-
+  const { _id, linkedTo } = await userModel.findById(userId);
   const userExpenses = await expenseModel.find({ owner: _id });
-  const otherUserExpenses = await expenseModel.find({ owner: { $ne: _id } });
+
+  const otherUserExpenses = await expenseModel.find({ owner: linkedTo });
 
   const calculatedUserExpenses = calculateExpense(userExpenses);
   const calculatedOtherUserExpenses = calculateExpense(otherUserExpenses);
