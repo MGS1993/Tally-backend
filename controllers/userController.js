@@ -17,8 +17,12 @@ exports.login = async (req, res) => {
 
 exports.getLinkedUsers = async (req, res) => {
   const { userId } = req.params;
-  let currentUser = await userModel.findById(userId);
-  let linkedUser = await userModel.findById(currentUser.linkedTo);
+  let currentUser = await userModel
+    .findById(userId)
+    .select("userName linkedTo");
+  let linkedUser = await userModel
+    .findById(currentUser.linkedTo)
+    .select("userName linkedTo");
 
   if (currentUser === undefined)
     return res.status(404).json({ msg: "No users found" });
